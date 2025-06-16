@@ -6,6 +6,7 @@ import { format } from "date-fns";
 type APODProps = {
   isActive: boolean;
   onZoom: () => void;
+  onZoomOut: () => void;
 };
 
 type APOD = {
@@ -16,7 +17,7 @@ type APOD = {
   url: string;
 };
 
-export const APOD: React.FC<APODProps> = ({ isActive, onZoom }) => {
+export const APOD: React.FC<APODProps> = ({ isActive, onZoom, onZoomOut }) => {
   const todaysDate = new Date();
   const [apod, setApod] = useState<APOD>();
 
@@ -49,16 +50,26 @@ export const APOD: React.FC<APODProps> = ({ isActive, onZoom }) => {
     <section className="flex flex-col items-center justify-evenly">
       {apod ? (
         <>
-          <button className="bg-transparent" onClick={onZoom}>
-            <img src={apod.hdurl} alt="Astronomy Picture of the Day" className="w-1/10 h-1/10 border rounded-full border-white" />
-          </button>
+          {!isActive && (
+            <button className="bg-transparent" onClick={onZoom}>
+              <img
+                src={apod.hdurl}
+                alt="Astronomy Picture of the Day"
+                className="w-1/10 h-1/10 border rounded-full aspect-square border-white object-cover"
+              />
+            </button>
+          )}
 
-          <button className="w-15 h-15 self-start m-5">
-            <img src={backArrow} />
-          </button>
-          <img src={apod.hdurl} alt="Astronomy Picture of the Day" className="w-4/5 border rounded-lg border-white" />
-          <h1 className="text-4xl">{apod.title}</h1>
-          <p className="text-left w-4/5"> {apod.explanation}</p>
+          {isActive && (
+            <>
+              <button className="w-15 h-15 self-start m-5" onClick={onZoomOut}>
+                <img src={backArrow} />
+              </button>
+              <img src={apod.hdurl} alt="Astronomy Picture of the Day" className="w-4/5 border rounded-lg border-white" />
+              <h1 className="text-4xl">{apod.title}</h1>
+              <p className="text-left w-4/5"> {apod.explanation}</p>
+            </>
+          )}
         </>
       ) : (
         <ClipLoader color={"#4487C9"} size={150} aria-label="Loading..." data-testid="loader" />
