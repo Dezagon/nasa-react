@@ -47,26 +47,27 @@ export const APOD: React.FC<APODProps> = ({ isActive, onZoom, onZoomOut }) => {
 
   return (
     //Make zoom out component here
-    <section className="flex flex-col items-center justify-evenly">
+    <section className="flex flex-col items-center justify-evenly gap-3">
       {apod ? (
         <>
           {!isActive && (
-            <button className="bg-transparent" onClick={onZoom}>
-              <img
-                src={apod.hdurl}
-                alt="Astronomy Picture of the Day"
-                className="w-1/10 h-1/10 border rounded-full aspect-square border-white object-cover"
-              />
-            </button>
+            <>
+              <button className="bg-transparent cursor-pointer overflow-hidden w-2/10 max-sm:w-3/10 md:w-2/10 lg:w-2/10" onClick={onZoom}>
+                <img
+                  src={apod.url}
+                  alt="Astronomy Picture of the Day"
+                  className="w-full h-full border rounded-full aspect-square border-white object-cover"
+                />
+              </button>
+            </>
           )}
-
           {isActive && (
             <>
-              <button className="w-15 h-15 self-start m-5" onClick={onZoomOut}>
+              <button className="w-15 h-15 self-start m-5 cursor-pointer" onClick={onZoomOut}>
                 <img src={backArrow} />
               </button>
-              <img src={apod.hdurl} alt="Astronomy Picture of the Day" className="w-4/5 border rounded-lg border-white" />
-              <h1 className="text-4xl">{apod.title}</h1>
+              <img src={apod.hdurl} alt="Astronomy Picture of the Day" className="w-4/5 border rounded-lg border-white max-sm:w-9/10 h-full" />
+              <h1 className="text-4xl text-center">{apod.title}</h1>
               <p className="text-left w-4/5"> {apod.explanation}</p>
             </>
           )}

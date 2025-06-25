@@ -1,9 +1,12 @@
 import sun from "./assets/sun.png";
-//import sun from "./assets/sun.gif";
 
 type SunProps = {
   isActive: boolean;
 };
 export const Sun: React.FC<SunProps> = ({ isActive }) => {
-  return <>{isActive && <img src={sun} alt="Astronomy Picture of the Day" className="w-3/10 h-3/10 rounded-full aspect-square object-cover" />};</>;
+  return (
+    <main className="w-3/10 overflow-hidden max-sm:w-6/10 md:w-3/10 lg:w-2/10">
+      {isActive && <img src={sun} alt="Sun" className="w-screen rounded-full aspect-square object-cover" />}
+    </main>
+  );
 };
